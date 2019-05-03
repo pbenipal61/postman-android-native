@@ -5,19 +5,17 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
-import com.postmaninteractive.postman.Utils.AuthHelper;
 import com.postmaninteractive.postman.Utils.BottomNavigationViewHelper;
 
-public class MainActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "ProfileActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_profile);
 
         setupBottomNavigationView();
-        AuthHelper.init(this);
     }
 
     /**
