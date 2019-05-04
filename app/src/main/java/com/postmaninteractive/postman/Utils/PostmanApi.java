@@ -1,5 +1,6 @@
 package com.postmaninteractive.postman.Utils;
 
+import com.postmaninteractive.postman.Models.CustomLocale;
 import com.postmaninteractive.postman.Models.User;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public interface PostmanApi {
 
     @FormUrlEncoded
     @POST("register")
-    Call<User> register(
+    Call<AuthHelper.RegisterResponse> register(
             @Field("firstName") String firstName,
             @Field("lastName") String lastName,
             @Field("email") String email,
@@ -26,4 +27,13 @@ public interface PostmanApi {
             @Field("country") String country,
             @Field("continent") String continent
     );
+
+    @POST ("login")
+    Call<AuthHelper.LoginResponse> login(
+
+    );
+
+    @GET("locale")
+    Call<CustomLocale> getCustomLocale();
+
 }

@@ -6,6 +6,10 @@
         android:title=""
         android:icon="@drawable/icons8_user_48"/>
     <item
+        android:id="@+id/ic_create_event"
+        android:title=""
+        android:icon="@drawable/icons8_user_48"/>
+    <item
         android:id="@+id/ic_profile"
         android:title=""
         android:icon="@drawable/outline_person_black_18dp"/>

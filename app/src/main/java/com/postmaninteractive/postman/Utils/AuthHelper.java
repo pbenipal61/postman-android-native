@@ -2,15 +2,11 @@ package com.postmaninteractive.postman.Utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.location.Address;
-import android.location.Geocoder;
+
 import android.util.Log;
 
+import com.postmaninteractive.postman.Models.CustomLocale;
 import com.postmaninteractive.postman.Models.User;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,6 +20,7 @@ public class AuthHelper {
     private static final String TAG = "AuthHelper";
     private static PostmanApi postmanApi;
     private static Retrofit retrofit;
+    private static SharedPreferences sp;
 
     public static  void init(final Context context){
 
@@ -32,21 +29,25 @@ public class AuthHelper {
         postmanApi = retrofit.create(PostmanApi.class);
 
        //TODO SECURE DATA SAVING AND RETRIEVAL
-       SharedPreferences sp = context.getSharedPreferences("LOGIN_INFO", MODE_PRIVATE);
+       sp = context.getSharedPreferences("LOGIN_INFO", MODE_PRIVATE);
        String defaultStr = "default";
        String token = sp.getString("apiToken", defaultStr);
-
+       String id = sp.getString("id", defaultStr);
        assert token != null;
-       if(token.equalsIgnoreCase(defaultStr)){
+       if(token.equalsIgnoreCase(defaultStr) || id.equalsIgnoreCase(defaultStr)){
 
-           Log.d(TAG, "init: getting apiToken...");
+           Log.d(TAG, "init: registering user...");
 //           register(context);
+            register(context);
 
-           LocationHelper.init(context);
+       }else{
 
+           Log.d(TAG, "init: logging user in...");
        }
 
     }
+
+
 
     private static void register(Context context){
 
@@ -54,42 +55,139 @@ public class AuthHelper {
 
 
 
-
-        User user = new User("Laura", "Kortelainen", "leelauraforever@gmail.com", "Qwerty12", "ENG", "Oulu", "Finland", "Europe");
-        Call<User> call = postmanApi.register(
-                user.getFirstName(),
-                user.getLastName(),
-                user.getEmail(),
-                user.getPassword(),
-                user.getLanguage(),
-                user.getCity(),
-                user.getCountry(),
-                user.getContinent()
-        );
-        call.enqueue(new Callback<User>() {
+        Call<CustomLocale> call = postmanApi.getCustomLocale();
+        call.enqueue(new Callback<CustomLocale>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(Call<CustomLocale> call, Response<CustomLocale> response) {
+
                 if(!response.isSuccessful()){
-                    Log.d(TAG, "onResponse: User registeration failed "+ response.code()+" "+response.message());
-                    return ;
+                    Log.d(TAG, "onResponse: response code" + response.code());
+                    return;
                 }
 
-                User userResponse = response.body();
-                Log.d(TAG, "onResponse: user registered " + response);
+                CustomLocale customLocale = response.body();
+                assert customLocale != null;
+                Log.d(TAG, "onResponse: City is " + customLocale.getCity());
 
 
+                User user = new User(
+                        "Laura",
+                        "Kortelainen",
+                        "leelauraforever@gmail.com",
+                        "Qwerty12",
+                        "ENG",
+                            customLocale.getCity(),
+                            customLocale.getCountry(),
+                        "Europe"
+                );
+                Call<RegisterResponse> call2 = postmanApi.register(
+                        user.getFirstName(),
+                        user.getLastName(),
+                        user.getEmail(),
+                        user.getPassword(),
+                        user.getLanguage(),
+                        user.getCity(),
+                        user.getCountry(),
+                        user.getContinent()
+                );
+                call2.enqueue(new Callback<RegisterResponse>() {
+                    @Override
+                    public void onResponse(Call<RegisterResponse> call2, Response<RegisterResponse> response) {
+                        if(!response.isSuccessful()){
+                            Log.d(TAG, "onResponse: User registeration failed "+ response.code()+" "+response.message());
+                            return ;
+                        }
+
+                        RegisterResponse registerResponse = response.body();
+                        Log.d(TAG, "onResponse: user registered " + registerResponse.getToken());
+                        sp.edit().putString("apiToken", registerResponse.getToken()).apply();
+                        sp.edit().putString("id", registerResponse.getId()).apply();
+
+
+
+
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<RegisterResponse> call2, Throwable t) {
+
+                        Log.d(TAG, "onFailure: Failed to register" +  t.getMessage());
+
+                    }
+                });
 
 
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<CustomLocale> call, Throwable t) {
 
-                Log.d(TAG, "onFailure: Failed to register" +  t.getMessage());
+                t.printStackTrace();
 
             }
         });
 
 
+
+
     }
+
+
+    public class RegisterResponse{
+
+        private String token, id;
+
+        public RegisterResponse(String token, String id) {
+            this.token = token;
+            this.id = id;
+        }
+
+        public String getToken() {
+            return token;
+        }
+
+        public void setToken(String token) {
+            this.token = token;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+
+    }
+
+    public class LoginResponse{
+
+        private User user;
+        private String token;
+
+        public LoginResponse(User user, String token) {
+            this.user = user;
+            this.token = token;
+        }
+
+        public User getUser() {
+            return user;
+        }
+
+        public void setUser(User user) {
+            this.user = user;
+        }
+
+        public String getToken() {
+            return token;
+        }
+
+        public void setToken(String token) {
+            this.token = token;
+        }
+    }
+
+
 }

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+import com.postmaninteractive.postman.CreateEventActivity;
 import com.postmaninteractive.postman.MainActivity;
 import com.postmaninteractive.postman.ProfileActivity;
 import com.postmaninteractive.postman.R;
@@ -42,6 +43,9 @@ public class BottomNavigationViewHelper {
                     case R.id.ic_profile:
                         intent = new Intent(context, ProfileActivity.class);
                         break;
+
+                    case R.id.ic_create_event:
+                        intent = new Intent(context, CreateEventActivity.class);
                 }
 
                 if(intent != null){
