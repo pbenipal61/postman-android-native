@@ -1,37 +1,42 @@
 package com.postmaninteractive.postman;
 
-import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CalendarView;
-import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+import com.postmaninteractive.postman.Fragments.CreateEventBoundFragment;
+import com.postmaninteractive.postman.Fragments.CreateEventContactFragment;
+import com.postmaninteractive.postman.Fragments.CreateEventWhatFragment;
+import com.postmaninteractive.postman.Fragments.CreateEventWhenFragment;
+import com.postmaninteractive.postman.Fragments.CreateEventWhereFragment;
 import com.postmaninteractive.postman.Models.EventEntry;
 import com.postmaninteractive.postman.Utils.BottomNavigationViewHelper;
 import com.postmaninteractive.postman.Utils.PostmanApi;
 import com.postmaninteractive.postman.Utils.RetroftHelper;
 
-import java.sql.Array;
-
 import retrofit2.Call;
 import retrofit2.Retrofit;
 
-public class CreateEventActivity extends AppCompatActivity {
+public class CreateEventActivity extends AppCompatActivity implements CreateEventWhereFragment.WhereFragmentListener, CreateEventWhatFragment.WhatFragmentListener, CreateEventWhenFragment.WhenFragmentListener, CreateEventBoundFragment.BoundFragmentListener, CreateEventContactFragment.ContactFragmentListener {
     private static final String TAG = "CreateEventActivity";
     private CalendarView calendarView;
     private TimePicker timeView;
-    private Spinner typeView, reachView, boundView;
-    private EditText titleView, messageView, instructionsView, contactNameView, contactPhoneView, contactEmailView, addressView, cityView, countryView;
+
+    private Button boundsView, contactView, whatView, whenView, whereView;
+    private CreateEventWhereFragment whereFragment;
+    private CreateEventWhatFragment whatFragment;
+    private CreateEventBoundFragment boundFragment;
+    private CreateEventWhenFragment whenFragment;
+    private CreateEventContactFragment contactFragment;
     private int dateArr[] = new int[3];
     private int timeArr[] = new int[2];
     private Retrofit retrofit;
@@ -40,75 +45,100 @@ public class CreateEventActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_event);
+        setContentView(R.layout.activity_create_event_2);
 
         this.getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.layout_action_bar);
         getSupportActionBar().setElevation(0);
 
+        boundsView = (Button) findViewById(R.id.boundsView);
+        contactView = (Button) findViewById(R.id.contactView);
+        whatView = (Button) findViewById(R.id.whatView);
+        whenView = (Button) findViewById(R.id.whenView);
+        whereView = (Button) findViewById(R.id.whereView);
+
+        boundsView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadFragment(selectFragment(CreateEventParts.BOUND));
+            }
+        });
+
+        contactView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadFragment(selectFragment(CreateEventParts.CONTACT));
+            }
+        });
+
+        whatView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadFragment(selectFragment(CreateEventParts.WHAT));
+            }
+        });
+
+        whereView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadFragment(selectFragment(CreateEventParts.WHERE));
+            }
+        });
+
+        whenView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadFragment(selectFragment(CreateEventParts.WHEN));
+            }
+        });
+
+
         retrofit = RetroftHelper.generate("api");
         postmanApi = retrofit.create(PostmanApi.class);
-
-        typeView = findViewById(R.id.typeView);
-        String[] types = { "Sports", "Food and Dining", };
-        typeView.setAdapter(getArrayAdapter(types));
-
-
-        reachView = findViewById(R.id.reachView);
-        String[] reaches = {"Within city", "Country wide", "Global", "Online"};
-        reachView.setAdapter(getArrayAdapter(reaches));
-
-        boundView = findViewById(R.id.boundView);
-        String[] bounds = {"Private", "Public"};
-        boundView.setAdapter(getArrayAdapter(bounds));
-
-        calendarView = (CalendarView) findViewById(R.id.calendarView);
-
-        Log.d(TAG, "onCreate: "+ calendarView.getDate());
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-
-            @Override
-            public void onSelectedDayChange(CalendarView arg0, int year, int month,
-                                            int date) {
-
-                dateArr[0] = date;
-                dateArr[1] = month;
-                dateArr[2] = year;
-
-            }
-        });
-
-        timeView = (TimePicker) findViewById(R.id.timeView);
-        timeView.setIs24HourView(true);
-        timeView.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
-            @Override
-            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
-
-                timeArr[0] = minute;
-                timeArr[1] = hourOfDay;
-            }
-        });
-
-        titleView = (EditText) findViewById(R.id.titleView);
-        messageView = (EditText) findViewById(R.id.messageView);
-        instructionsView = (EditText) findViewById(R.id.instructionsView);
-        contactNameView = (EditText) findViewById(R.id.contactNameView);
-        contactPhoneView = (EditText) findViewById(R.id.contactPhoneView);
-        contactEmailView = (EditText) findViewById(R.id.contactEmailView);
-        addressView = (EditText) findViewById(R.id.addressView);
-        cityView = (EditText) findViewById(R.id.cityView);
-        countryView = (EditText) findViewById(R.id.countryView);
-
 
 
         setupBottomNavigationView();
     }
 
-    private ArrayAdapter<String> getArrayAdapter(String[] options){
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, options);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        return adapter;
+    private enum CreateEventParts {
+        BOUND, CONTACT, WHAT, WHEN, WHERE
+    }
+
+    private Fragment selectFragment(CreateEventParts part) {
+
+        Fragment fragment = null;
+        switch (part) {
+
+            case BOUND:
+                fragment = new CreateEventBoundFragment();
+                break;
+
+            case CONTACT:
+                fragment = new CreateEventContactFragment();
+                break;
+
+            case WHAT:
+                fragment = new CreateEventWhatFragment();
+                break;
+
+            case WHEN:
+                fragment = new CreateEventWhenFragment();
+                break;
+
+            case WHERE:
+                fragment = new CreateEventWhereFragment();
+                break;
+        }
+
+
+        return fragment;
+
+
+    }
+
+    private void loadFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
     }
 
     @Override
@@ -124,7 +154,7 @@ public class CreateEventActivity extends AppCompatActivity {
 
         int id = item.getItemId();
 
-        switch(id){
+        switch (id) {
 
             case R.id.ic_done:
                 Log.d(TAG, "onOptionsItemSelected: done");
@@ -139,36 +169,62 @@ public class CreateEventActivity extends AppCompatActivity {
         return true;
     }
 
-    private void postEvent(){
+    private void postEvent() {
 
         String[] photos = {"null"};
         Call<EventEntry> call = postmanApi.postEvent(
-                titleView.getText().toString(),
-                typeView.getSelectedItem().toString(),
-                messageView.getText().toString(),
-                instructionsView.getText().toString(),
-                reachView.getSelectedItem().toString(),
+                "",
+                "",
+                "",
+                "",
+                "",
                 dateArr[0], dateArr[1], dateArr[2],
                 timeArr[1], timeArr[0],
-                cityView.getText().toString(),
-                countryView.getText().toString(),
+
+                "", "",
                 "Europe",
-                boundView.getSelectedItem().toString(),
+                "",
                 photos,
-                contactNameView.getText().toString(),
-                contactPhoneView.getText().toString(),
-                contactEmailView.getText().toString(),
-                addressView.getText().toString(),
+                "",
+                "",
+                "",
+                "",
                 "leelaura"
-                );
+        );
 
 
     }
 
-    private  void setupBottomNavigationView(){
+    private void setupBottomNavigationView() {
 
         Log.d(TAG, "setupBottomNavigationView: Setting up bottom navigation view");
         BottomNavigationViewEx bottomNavigationViewEx = (BottomNavigationViewEx) findViewById(R.id.nav_bottom);
         BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationViewEx, this);
+    }
+
+    @Override
+    public void onWhereValuesSaved(String[] vals) {
+
+        Log.d(TAG, "onWhereValuesSaved: " + vals[0]);
+    }
+
+    @Override
+    public void onWhatValuesSaved(String[] vals) {
+        Log.d(TAG, "onWhatValuesSaved: " + vals[0]);
+    }
+
+    @Override
+    public void onWhenValuesChanges(int[] vals) {
+
+    }
+
+    @Override
+    public void onBoundValuesSaved(String[] vals) {
+
+    }
+
+    @Override
+    public void onContactValuesSaved(String[] vals) {
+
     }
 }

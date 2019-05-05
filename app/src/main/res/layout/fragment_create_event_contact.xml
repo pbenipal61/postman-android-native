@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".Fragments.CreateEventContactFragment"
+    android:orientation="vertical">
+
+
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="Who to contact if people want more information ?"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:weightSum="100"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_weight="70"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Name"/>
+        <EditText
+            android:layout_weight="30"
+
+            android:layout_width="match_parent"
+            android:padding="@dimen/profilepage_edittext_padding"
+            android:layout_height="50dp"
+            android:hint="Name"
+
+            android:id="@+id/contactNameView"
+            android:layout_marginTop="@dimen/profile_edittext_margin_top"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:weightSum="100"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_weight="70"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Phone"/>
+        <EditText
+            android:layout_weight="30"
+
+            android:layout_width="match_parent"
+            android:padding="@dimen/profilepage_edittext_padding"
+            android:layout_height="50dp"
+            android:hint="Phone"
+
+            android:id="@+id/contactPhoneView"
+            android:layout_marginTop="@dimen/profile_edittext_margin_top"
+            android:inputType="phone"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:weightSum="100"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_weight="70"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Email"/>
+        <EditText
+            android:layout_weight="30"
+
+            android:layout_width="match_parent"
+            android:padding="@dimen/profilepage_edittext_padding"
+            android:layout_height="50dp"
+            android:hint="Email"
+
+            android:id="@+id/contactEmailView"
+            android:layout_marginTop="@dimen/profile_edittext_margin_top"
+            android:inputType="textEmailAddress"/>
+
+    </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:padding="5dp"
+        android:layout_height="50dp"
+        android:text="save"
+        android:id="@+id/saveView"/>
+
+
+</LinearLayout>

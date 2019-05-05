@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".Fragments.CreateEventBoundFragment"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="What is the reach for the event?"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:weightSum="100"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_weight="70"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Reach"/>
+        <Spinner
+            android:layout_weight="30"
+
+            android:layout_width="match_parent"
+            android:padding="@dimen/profilepage_edittext_padding"
+            android:layout_height="50dp"
+            android:hint="Reach"
+            android:id="@+id/reachView"
+            android:layout_marginTop="@dimen/profile_edittext_margin_top"
+           />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:weightSum="100"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_weight="70"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Bound"/>
+        <Spinner
+            android:layout_weight="30"
+
+            android:layout_width="match_parent"
+            android:padding="@dimen/profilepage_edittext_padding"
+            android:layout_height="50dp"
+            android:hint="Bound"
+            android:id="@+id/boundView"
+            android:layout_marginTop="@dimen/profile_edittext_margin_top"
+            />
+
+    </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:padding="5dp"
+        android:layout_height="50dp"
+        android:text="save"
+        android:id="@+id/saveView"/>
+
+
+
+
+</LinearLayout>
