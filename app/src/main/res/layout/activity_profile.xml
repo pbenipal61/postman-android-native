@@ -4,10 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileActivity">
-
+    tools:context=".ProfileActivity"
+    android:focusableInTouchMode="true"
+    android:focusable="true">
 
     <LinearLayout
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ProgressBar
+            android:id="@+id/progressBarView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"/>
+    </LinearLayout>
+
+
+   <LinearLayout
 
         android:padding="10dp"
         android:layout_width="match_parent"
@@ -44,7 +58,7 @@
             android:padding="@dimen/profilepage_edittext_padding"
             android:layout_height="50dp"
             android:hint="Name"
-            android:id="@+id/firstNameView"
+            android:id="@+id/nameView"
             android:layout_marginTop="@dimen/profile_edittext_margin_top"
             android:inputType="text"/>
 

@@ -4,12 +4,400 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateEventActivity">
+    tools:context=".CreateEventActivity"
+    android:focusableInTouchMode="true"
+    android:focusable="true">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ProgressBar
+            android:id="@+id/progressBarView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"/>
+    </LinearLayout>
+
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="What is the event about?"/>
+    <LinearLayout
+
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/linearLayout1"
+
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:weightSum="100"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight="70"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Type"/>
+            <Spinner
+                android:layout_weight="30"
+
+                android:layout_width="match_parent"
+                android:padding="@dimen/profilepage_edittext_padding"
+                android:layout_height="50dp"
+                android:hint="Type"
+                android:id="@+id/typeView"
+                android:layout_marginTop="@dimen/profile_edittext_margin_top"
+                android:inputType="text"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:weightSum="100"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight="70"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Title"/>
+            <EditText
+                android:layout_weight="30"
+
+                android:layout_width="match_parent"
+                android:padding="@dimen/profilepage_edittext_padding"
+                android:layout_height="50dp"
+                android:hint="Title"
+                android:id="@+id/titleView"
+                android:layout_marginTop="@dimen/profile_edittext_margin_top"
+                android:inputType="text"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:weightSum="100"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight="70"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Message"/>
+            <EditText
+                android:layout_weight="30"
+
+                android:layout_width="match_parent"
+                android:padding="@dimen/profilepage_edittext_padding"
+                android:layout_height="50dp"
+                android:hint="Message"
+
+                android:id="@+id/messageView"
+                android:layout_marginTop="@dimen/profile_edittext_margin_top"
+                android:inputType="text"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:weightSum="100"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight="70"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Instructions"/>
+            <EditText
+                android:layout_weight="30"
+
+                android:layout_width="match_parent"
+                android:padding="@dimen/profilepage_edittext_padding"
+                android:layout_height="50dp"
+                android:hint="Instructions"
+
+                android:id="@+id/instructionsView"
+                android:layout_marginTop="@dimen/profile_edittext_margin_top"
+                android:inputType="text"/>
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="When is the event ?"/>
+
+        <CalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TimePicker
+            android:id="@+id/timeView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="Where is the event ?"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:weightSum="100"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight="70"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Address"/>
+            <EditText
+                android:layout_weight="30"
+
+                android:layout_width="match_parent"
+                android:padding="@dimen/profilepage_edittext_padding"
+                android:layout_height="50dp"
+                android:hint="Name"
+
+                android:id="@+id/addressView"
+                android:layout_marginTop="@dimen/profile_edittext_margin_top"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:weightSum="100"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight="70"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="City"/>
+            <EditText
+                android:layout_weight="30"
+
+                android:layout_width="match_parent"
+                android:padding="@dimen/profilepage_edittext_padding"
+                android:layout_height="50dp"
+                android:hint="Name"
+
+                android:id="@+id/cityView"
+                android:layout_marginTop="@dimen/profile_edittext_margin_top"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:weightSum="100"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight="70"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Address"/>
+            <EditText
+                android:layout_weight="30"
+
+                android:layout_width="match_parent"
+                android:padding="@dimen/profilepage_edittext_padding"
+                android:layout_height="50dp"
+                android:hint="Country"
+
+                android:id="@+id/countryView"
+                android:layout_marginTop="@dimen/profile_edittext_margin_top"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="What is the reach for the event?"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:weightSum="100"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight="70"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Reach"/>
+            <Spinner
+                android:layout_weight="30"
+
+                android:layout_width="match_parent"
+                android:padding="@dimen/profilepage_edittext_padding"
+                android:layout_height="50dp"
+                android:hint="Reach"
+                android:id="@+id/reachView"
+                android:layout_marginTop="@dimen/profile_edittext_margin_top"
+                android:inputType="textEmailAddress"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:weightSum="100"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight="70"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Bound"/>
+            <Spinner
+                android:layout_weight="30"
+
+                android:layout_width="match_parent"
+                android:padding="@dimen/profilepage_edittext_padding"
+                android:layout_height="50dp"
+                android:hint="Bound"
+                android:id="@+id/boundView"
+                android:layout_marginTop="@dimen/profile_edittext_margin_top"
+                />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="Who to contact if people want more information ?"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:weightSum="100"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight="70"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Name"/>
+            <EditText
+                android:layout_weight="30"
+
+                android:layout_width="match_parent"
+                android:padding="@dimen/profilepage_edittext_padding"
+                android:layout_height="50dp"
+                android:hint="Name"
+
+                android:id="@+id/contactNameView"
+                android:layout_marginTop="@dimen/profile_edittext_margin_top"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:weightSum="100"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight="70"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Phone"/>
+            <EditText
+                android:layout_weight="30"
+
+                android:layout_width="match_parent"
+                android:padding="@dimen/profilepage_edittext_padding"
+                android:layout_height="50dp"
+                android:hint="Phone"
+
+                android:id="@+id/contactPhoneView"
+                android:layout_marginTop="@dimen/profile_edittext_margin_top"
+                android:inputType="phone"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:weightSum="100"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight="70"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Email"/>
+            <EditText
+                android:layout_weight="30"
+
+                android:layout_width="match_parent"
+                android:padding="@dimen/profilepage_edittext_padding"
+                android:layout_height="50dp"
+                android:hint="Email"
+
+                android:id="@+id/contactEmailView"
+                android:layout_marginTop="@dimen/profile_edittext_margin_top"
+                android:inputType="textEmailAddress"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>
+    </ScrollView>
 
     <include
+        android:id="@+id/layout_bottom_nav"
         layout="@layout/layout_bottom_nav"
         android:layout_alignParentBottom="true"
         android:layout_height="50dp"
         android:layout_width="match_parent"/>
-
 </RelativeLayout>

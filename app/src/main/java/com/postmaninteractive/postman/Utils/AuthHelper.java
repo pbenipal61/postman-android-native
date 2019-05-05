@@ -8,6 +8,8 @@ import android.util.Log;
 import com.postmaninteractive.postman.Models.CustomLocale;
 import com.postmaninteractive.postman.Models.User;
 
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -22,32 +24,50 @@ public class AuthHelper {
     private static Retrofit retrofit;
     private static SharedPreferences sp;
 
+
+
     public static  void init(final Context context){
 
 
-        retrofit = RetroftHelper.generate("users");
-        postmanApi = retrofit.create(PostmanApi.class);
-
-       //TODO SECURE DATA SAVING AND RETRIEVAL
-       sp = context.getSharedPreferences("LOGIN_INFO", MODE_PRIVATE);
-       String defaultStr = "default";
-       String token = sp.getString("apiToken", defaultStr);
-       String id = sp.getString("id", defaultStr);
-       assert token != null;
-       if(token.equalsIgnoreCase(defaultStr) || id.equalsIgnoreCase(defaultStr)){
-
-           Log.d(TAG, "init: registering user...");
-//           register(context);
-            register(context);
-
-       }else{
-
-           Log.d(TAG, "init: logging user in...");
-       }
+//        retrofit = RetroftHelper.generate("users");
+//        postmanApi = retrofit.create(PostmanApi.class);
+//
+//       //TODO SECURE DATA SAVING AND RETRIEVAL
+//       sp = context.getSharedPreferences("LOGIN_INFO", MODE_PRIVATE);
+//       String defaultStr = "default";
+//       String token = sp.getString("apiToken", defaultStr);
+//       String id = sp.getString("id", defaultStr);
+//       assert token != null;
+//       if(token.equalsIgnoreCase(defaultStr) || id.equalsIgnoreCase(defaultStr)){
+//
+//           Log.d(TAG, "init: registering user...");
+////           register(context);
+//            register(context);
+//
+//       }else{
+//
+//           Log.d(TAG, "init: logging user in...");
+//       }
 
     }
 
+    private static String login(String username, String password, Context context){
 
+        String apiToken = null;
+        retrofit = RetroftHelper.generate("users");
+        postmanApi = retrofit.create(PostmanApi.class);
+
+        Call<LoginResponse> call = postmanApi.login(username, password);
+        try {
+            Response<LoginResponse> loginResponse = call.execute();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+            return apiToken;
+    }
 
     private static void register(Context context){
 
